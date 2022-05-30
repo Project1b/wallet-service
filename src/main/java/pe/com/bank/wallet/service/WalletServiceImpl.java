@@ -53,15 +53,27 @@ public class WalletServiceImpl implements WalletService{
 			walletOperationDTO.setSourceWalletId(sourceWallet.getWalletId());
 			if(sourceWallet.getBalance()>= walletOperationDTO.getAmount()) {
 				sourceWallet.setBalance(sourceWallet.getBalance()-walletOperationDTO.getAmount());
-				walletRepository.save(sourceWallet).subscribe();
-				return walletRepository.findByPhoneNumber(walletOperationDTO.getDestinationPhoneNumber()).flatMap( destinationWallet -> {
-					walletOperationDTO.setDestinationWalletId(destinationWallet.getWalletId());
-					destinationWallet.setBalance(destinationWallet.getBalance()+walletOperationDTO.getAmount());
-					return walletRepository.save(destinationWallet).flatMap( w -> {
-						sendWalletDocument(walletOperationDTO);
-						return Mono.just(new WalletResponseDTO("0000","successful operation"));
+				return walletRepository.save(sourceWallet).flatMap( saveSource -> {	
+					return walletRepository.findByPhoneNumber(walletOperationDTO.getDestinationPhoneNumber()).flatMap( destinationWallet -> {
+						walletOperationDTO.setDestinationWalletId(destinationWallet.getWalletId());
+						destinationWallet.setBalance(destinationWallet.getBalance()+walletOperationDTO.getAmount());
+						return walletRepository.save(destinationWallet).flatMap( saveDestination -> {
+							sendWalletDocument(walletOperationDTO);
+							
+							if(sourceWallet.getDebitCardId()!=null || destinationWallet.getDebitCardId()!=null) {
+								WalletOperationAccountDTO walletOperationAccountDTO = new WalletOperationAccountDTO();
+								walletOperationAccountDTO.setAmount(walletOperationDTO.getAmount());
+								walletOperationAccountDTO.setSourceCardId(sourceWallet.getDebitCardId());
+								walletOperationAccountDTO.setSourceCardId(destinationWallet.getDebitCardId());
+								senWalletOperationAccount(walletOperationAccountDTO);
+							}
+								
+							return Mono.just(new WalletResponseDTO("0000","successful operation"));
+						});
 					});
+					
 				});
+				
 			}else {
 				return Mono.just(new WalletResponseDTO("0002","amount not available in source wallet"));
 			}
