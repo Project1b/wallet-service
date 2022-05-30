@@ -41,12 +41,14 @@ public class WalletServiceImpl implements WalletService{
 			wallet.setPhoneNumber(updateWalletDocument.getPhoneNumber() !=null ? updateWalletDocument.getPhoneNumber():wallet.getPhoneNumber());
 			wallet.setPhoneImei(updateWalletDocument.getPhoneImei() !=null ? updateWalletDocument.getPhoneImei():wallet.getPhoneImei());
 			wallet.setEmail(updateWalletDocument.getEmail() !=null ? updateWalletDocument.getEmail():wallet.getEmail());
-			wallet.setDebitcardId(updateWalletDocument.getDebitcardId() !=null ? updateWalletDocument.getDebitcardId():wallet.getDebitcardId());
+			wallet.setDebitCardId(updateWalletDocument.getDebitCardId() !=null ? updateWalletDocument.getDebitCardId():wallet.getDebitCardId());
 			return walletRepository.save(wallet);
 		});
 	}
 	
 	public Mono<WalletResponseDTO> operationWallet(WalletOperationDTO walletOperationDTO){
+		
+		
 		return walletRepository.findByPhoneNumber(walletOperationDTO.getSourcePhoneNumber()).flatMap( sourceWallet ->{
 			walletOperationDTO.setSourceWalletId(sourceWallet.getWalletId());
 			if(sourceWallet.getBalance()>= walletOperationDTO.getAmount()) {

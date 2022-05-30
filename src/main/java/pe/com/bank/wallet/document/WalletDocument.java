@@ -20,6 +20,6 @@ public class WalletDocument {
 	private Integer phoneNumber;
 	private Long phoneImei;
 	private String email;
-	private String debitcardId;
+	private String debitCardId;
 
 }
