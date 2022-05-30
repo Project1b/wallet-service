@@ -1,11 +1,11 @@
 package pe.com.bank.wallet.service;
 
 import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
 import pe.com.bank.wallet.document.WalletDocument;
+import pe.com.bank.wallet.dto.WalletOperationAccountDTO;
 import pe.com.bank.wallet.dto.WalletOperationDTO;
 import pe.com.bank.wallet.dto.WalletResponseDTO;
 import pe.com.bank.wallet.repository.WalletRepository;
@@ -80,6 +80,10 @@ public class WalletServiceImpl implements WalletService{
 	
 	private void sendWalletDocument(WalletOperationDTO walletOperationDTO) {
 		 streamBridge.send("wallet-out-0",walletOperationDTO);
+	}
+
+	private void senWalletOperationAccount(WalletOperationAccountDTO walletOperationAccountDTO){
+		streamBridge.send("walletAccount-out-0",walletOperationAccountDTO);
 	}
 	
 	public Mono<Void> deleteWalletById(String walletId){

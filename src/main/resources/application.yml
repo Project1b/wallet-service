@@ -17,6 +17,8 @@ spring:
       bindings:
         wallet-out-0:
           destination: mw0qp7ns-wallet
-  data: 
+        walletAccount-out-0:
+          destination: mw0qp7ns-wallet-account
+  data:
     mongodb:
       uri: mongodb+srv://erick:erickpinglo@cluster0.xdfgh.mongodb.net/bank

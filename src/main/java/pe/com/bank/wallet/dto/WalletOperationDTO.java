@@ -15,4 +15,5 @@ public class WalletOperationDTO {
 	private String sourceWalletId;
 	private String destinationWalletId;
 	private String message;
+
 }
