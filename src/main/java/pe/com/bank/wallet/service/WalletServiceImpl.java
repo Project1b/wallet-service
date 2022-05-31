@@ -29,6 +29,9 @@ public class WalletServiceImpl implements WalletService{
 	WalletRepository walletRepository;
 	@Autowired
 	StreamBridge streamBridge;
+	
+	RedisTemplate redisTemplate;
+	
 	private final ReactiveRedisOperations<String, WalletDocument> operations;
 	
 	
@@ -36,7 +39,7 @@ public class WalletServiceImpl implements WalletService{
         this.operations = operations;
     }
 
-	RedisTemplate redisTemplate;
+	
 	
 	public Flux<WalletDocument> getAllWallet(){
 		return walletRepository.findAll();
