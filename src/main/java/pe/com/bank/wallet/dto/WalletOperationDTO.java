@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 public class WalletOperationDTO {
 	
 	private Double amount;
-	private Integer sourcePhoneNumber;
-	private Integer destinationPhoneNumber;
+	private Long sourcePhoneNumber;
+	private Long destinationPhoneNumber;
 	private String sourceWalletId;
 	private String destinationWalletId;
 	private String message;

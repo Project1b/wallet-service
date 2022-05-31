@@ -15,9 +15,9 @@ public class WalletDocument {
 	@Id
 	private String walletId;
 	private String documentType;
-	private Integer documentNumber;
+	private Long documentNumber;
 	private Double balance;
-	private Integer phoneNumber;
+	private Long phoneNumber;
 	private Long phoneImei;
 	private String email;
 	private String debitCardId;

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import pe.com.bank.wallet.document.WalletDocument;
+import pe.com.bank.wallet.dto.WalletDebitCardDTO;
 import pe.com.bank.wallet.dto.WalletOperationDTO;
 import pe.com.bank.wallet.dto.WalletResponseDTO;
 import pe.com.bank.wallet.service.WalletService;
@@ -53,6 +54,11 @@ public class WalletController {
 	@PostMapping("/operationWallet")
 	public Mono<WalletResponseDTO> operationWallet(@RequestBody WalletOperationDTO walletOperationDTO){
 		return walletService.operationWallet(walletOperationDTO);
+	}
+	
+	@PostMapping("/asociateDebitCard/{walletId}")
+	public Mono<WalletResponseDTO> asociateDebitCard(@RequestBody WalletDebitCardDTO walletDebitCardDTO,@PathVariable String walletId){
+		return walletService.asociateDebitCard(walletDebitCardDTO,walletId);
 	}
 	
 	

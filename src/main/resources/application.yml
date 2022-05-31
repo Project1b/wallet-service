@@ -11,14 +11,21 @@ spring:
         jaas:
           config: org.apache.kafka.common.security.scram.ScramLoginModule required username="mw0qp7ns" password="B3QZdEOoxokd2bX0vclUkuAGOxxygn7E";
   cloud:
-#    function:
-#      definition: output;nttdata
+    function:
+      definition: updateCurrentAmountAccount
     stream:
       bindings:
-        wallet-out-0:
-          destination: mw0qp7ns-wallet
-        walletAccount-out-0:
+        wallet-transaction-out-0:
+          destination: mw0qp7ns-wallet-transaction
+        wallet-account-out-0:
           destination: mw0qp7ns-wallet-account
+        wallet-debitCardAsociated-out-0:
+          destination: mw0qp7ns-wallet-debiCardAsociated           
+        updateCurrentAmountAccount-in-0:
+          destination: mw0qp7ns-account-currentAmount  
+          
+          
+          
   data:
     mongodb:
       uri: mongodb+srv://erick:erickpinglo@cluster0.xdfgh.mongodb.net/bank

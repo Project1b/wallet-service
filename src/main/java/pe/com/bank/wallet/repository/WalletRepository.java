@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono;
 
 public interface WalletRepository extends ReactiveMongoRepository<WalletDocument, String>{
 	
-	Mono<WalletDocument> findByPhoneNumber(Integer phoneNumber);
+	Mono<WalletDocument> findByPhoneNumber(Long phoneNumber);
+	Mono<WalletDocument> findByDebitCardId(String debitCardId);
 
 }
