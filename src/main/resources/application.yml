@@ -10,6 +10,12 @@ spring:
         mechanism: SCRAM-SHA-256
         jaas:
           config: org.apache.kafka.common.security.scram.ScramLoginModule required username="mw0qp7ns" password="B3QZdEOoxokd2bX0vclUkuAGOxxygn7E";
+  redis:
+    host: localhost
+    port: 16379
+    #    username: default
+    password:
+    timeout: 5000
   cloud:
     function:
       definition: updateCurrentAmountAccount

@@ -63,4 +63,9 @@ public class WalletController {
 	
 	
 
+	@GetMapping(value="/wallet/phone/{id}")
+	public Mono<WalletDocument> getWallet(@PathVariable("id") Long id){
+		return walletService.findWalletPhoneById(id);
+	}
+
 }
