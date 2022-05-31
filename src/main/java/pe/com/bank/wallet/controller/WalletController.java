@@ -54,7 +54,10 @@ public class WalletController {
 	public Mono<WalletResponseDTO> operationWallet(@RequestBody WalletOperationDTO walletOperationDTO){
 		return walletService.operationWallet(walletOperationDTO);
 	}
-	
-	
+
+	@GetMapping(value="/wallet/phone/{id}")
+	public Mono<WalletDocument> getWallet(@PathVariable("id") int id){
+		return walletService.findWalletPhoneById(id);
+	}
 
 }

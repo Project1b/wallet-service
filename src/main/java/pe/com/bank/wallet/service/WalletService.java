@@ -15,5 +15,7 @@ public interface WalletService {
 	public Mono<Void> deleteWalletById(String walletId);
 	public Mono<WalletResponseDTO> operationWallet(WalletOperationDTO walletOperationDTO);
 	public Mono<WalletResponseDTO> asociateDebitCard(String walletId,String debitCardId);
-	
+
+	public Mono<WalletDocument> findWalletPhoneById(int id);
+
 }

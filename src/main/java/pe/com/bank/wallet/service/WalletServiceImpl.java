@@ -1,6 +1,8 @@
 package pe.com.bank.wallet.service;
 
 import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -19,6 +21,8 @@ public class WalletServiceImpl implements WalletService{
 	
 	WalletRepository walletRepository;
 	private StreamBridge streamBridge;
+
+	RedisTemplate redisTemplate;
 	
 	public Flux<WalletDocument> getAllWallet(){
 		return walletRepository.findAll();
@@ -101,4 +105,19 @@ public class WalletServiceImpl implements WalletService{
 	public Mono<Void> deleteWalletById(String walletId){
 		return walletRepository.deleteById(walletId);
 	}
+
+	public Mono<WalletDocument> findWalletPhoneById(int id) {
+		String key = "wallet_" + id;
+		ValueOperations<String, WalletDocument> operations = redisTemplate.opsForValue();
+		if (redisTemplate.hasKey(key)){
+			WalletDocument walle = operations.get(key);
+			return Mono.create(walletMonoSink -> walletMonoSink.success(walle));
+		}
+		Mono<WalletDocument> walletMono = walletRepository.findByPhoneNumber(id);
+		if (walletMono == null)
+			return walletMono;
+		walletMono.subscribe(wallet -> operations.set(key, wallet));
+		return walletMono;
+	}
+
 }
